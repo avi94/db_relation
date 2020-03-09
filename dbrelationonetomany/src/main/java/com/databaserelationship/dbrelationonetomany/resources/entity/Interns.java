@@ -33,8 +33,7 @@ public class Interns {
     @JsonProperty("time")
     private LocalDateTime dateTime;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "intern", cascade = CascadeType.ALL)
     @JsonProperty("details")
     @JsonIgnoreProperties("intern")
     private InternDetails internDetails;

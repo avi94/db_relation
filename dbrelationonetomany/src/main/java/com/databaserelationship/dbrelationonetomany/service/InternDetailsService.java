@@ -30,16 +30,29 @@ public class InternDetailsService {
                 request.getAddress(),
                 request.getZipCode()
         );
+
+        System.out.println("From Service: " + address.getAddress());
+        System.out.println("From Service: " + address.getZipCode());
+        System.out.println("From Service: " + "Req: " + request.getId());
+
         InternDetails details = new InternDetails(address);
 
         Optional<Interns> optionalIntern = internRepository.findById(request.getId());
+        System.out.println("From Service: " + details.getId());
+        System.out.println("From Service: " + details.getAddress());
 
         if (!optionalIntern.isPresent()) {
             throw new InvalidRequestException(String.format("Intern not found with id %s", request.getId()));
         }
 
         Interns intern = optionalIntern.get();
+        details.setIntern(intern);
+        System.out.println("From service: " + details.getIntern());
+
+        System.out.println("From Service: " + "Intern " + intern.getId());
+        System.out.println("From Service: " + "Intern " + intern.getFirstName() + intern.getLastName());
         intern.setInternDetails(details);
+        System.out.println("From Service: " + "Intern " + intern);
 
         return internRepository.save(intern);
     }

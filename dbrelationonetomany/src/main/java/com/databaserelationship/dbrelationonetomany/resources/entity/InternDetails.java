@@ -16,14 +16,14 @@ import javax.persistence.*;
 public class InternDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonProperty("address")
     @Embedded
     private Address address;
 
-    @OneToOne(mappedBy = "internDetails")
+    @OneToOne
+    @MapsId
     @JsonIgnoreProperties("details")
     private Interns intern;
 

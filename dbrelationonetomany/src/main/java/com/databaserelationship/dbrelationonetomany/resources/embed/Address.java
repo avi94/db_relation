@@ -1,16 +1,17 @@
 package com.databaserelationship.dbrelationonetomany.resources.embed;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class Address {
 
+    @JsonProperty("address")
     private String address;
+
+    @JsonProperty("zip_code")
     private Integer zipCode;
 }

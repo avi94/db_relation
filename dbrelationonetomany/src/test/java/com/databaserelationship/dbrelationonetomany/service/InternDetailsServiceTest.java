@@ -4,11 +4,14 @@ import com.databaserelationship.dbrelationonetomany.repository.InternDetailsRepo
 import com.databaserelationship.dbrelationonetomany.repository.InternRepository;
 import com.databaserelationship.dbrelationonetomany.resources.embed.Address;
 import com.databaserelationship.dbrelationonetomany.resources.entity.InternDetails;
+import com.databaserelationship.dbrelationonetomany.resources.entity.Interns;
+import com.databaserelationship.dbrelationonetomany.resources.enums.Gender;
 import com.databaserelationship.dbrelationonetomany.resources.request.InternDetailsRequest;
 import com.databaserelationship.dbrelationonetomany.util.exception.InvalidRequestException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,17 +45,26 @@ class InternDetailsServiceTest {
         InternDetailsRepository internDetailsRepository = Mockito.mock(InternDetailsRepository.class);
 
         InternDetailsService detailsService = new InternDetailsService(internDetailsRepository, internRepository);
+        InternDetailsRequest detailsRequest = new InternDetailsRequest(2L, "Kolkata", 147258);
 
-        InternDetailsRequest detailsRequest = new InternDetailsRequest(2L, "", 147258);
-        InternDetails internDetails = new InternDetails(new Address());
-        Mockito.when(detailsService.createInternDetails(detailsRequest)).thenReturn();
+        InternDetails internDetails = new InternDetails(new Address("Kolkata", 147258));
+        internDetails.setId(2L);
 
-//        InvalidRequestException requestException = assertThrows(
-//                InvalidRequestException.class,
-//                () -> detailsService.createInternDetails(detailsRequest)
-//        );
+        Interns intern = new Interns("abc", "xyz", Gender.MALE, LocalDateTime.now());
+        intern.setId(2L);
+        System.out.println("From Test: " + intern.getId());
 
-//        assertEquals("Intern not found with id 1", requestException.getMessage());
+        internDetails.setIntern(intern);
+        intern.setInternDetails(internDetails);
+
+
+        System.out.println("From Test: " + intern);
+        Mockito.when(internRepository.findById(detailsRequest.getId()))
+                .thenReturn(Optional.of(intern));
+
+        System.out.println("From Test: " + intern.getInternDetails());
+        System.out.println("From Test lol: " + detailsService.createInternDetails(detailsRequest));
+        assertEquals(intern, detailsService.createInternDetails(detailsRequest));
 
     }
 
