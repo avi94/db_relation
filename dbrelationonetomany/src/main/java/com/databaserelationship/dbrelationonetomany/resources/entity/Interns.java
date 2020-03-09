@@ -33,7 +33,16 @@ public class Interns {
     @JsonProperty("time")
     private LocalDateTime dateTime;
 
-    @OneToOne(mappedBy = "intern", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "intern_details_relation",
+            joinColumns = {
+                    @JoinColumn(name = "intern_id", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "intern_details_id", referencedColumnName = "id")
+            }
+    )
     @JsonProperty("details")
     @JsonIgnoreProperties("intern")
     private InternDetails internDetails;

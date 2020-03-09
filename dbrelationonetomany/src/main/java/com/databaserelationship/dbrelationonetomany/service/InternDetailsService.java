@@ -46,13 +46,8 @@ public class InternDetailsService {
         }
 
         Interns intern = optionalIntern.get();
-        details.setIntern(intern);
-        System.out.println("From service: " + details.getIntern());
 
-        System.out.println("From Service: " + "Intern " + intern.getId());
-        System.out.println("From Service: " + "Intern " + intern.getFirstName() + intern.getLastName());
         intern.setInternDetails(details);
-        System.out.println("From Service: " + "Intern " + intern);
 
         return internRepository.save(intern);
     }
